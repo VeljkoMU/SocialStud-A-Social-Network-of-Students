@@ -30,7 +30,6 @@ profileRouter.get("/profile", async (req, res)=>{
     });
   
     //Izbaci password iz rezulata
-    //Poboljsaj autorizaciju
 });
 
 profileRouter.post("/request", async (req, res)=>{
@@ -80,6 +79,50 @@ profileRouter.get("/request", async (req, res)=>{
     });
 });
 
+profileRouter.put("/accept", async (req, res)=>{
+    let username = req.body.destUser.username;
+    let password = md5Encrypt(req.body.destUser.password);
+    let srcUsername = req.body.srcUser.username;
+
+    authenticate(username, password)
+    .then(()=>{
+        neo4j.run(`
+            MATCH (n:USER {username: "${srcUsername}"})-[r:REQUEST]->(m:USER {username: "${username}"})
+            detach delete r
+        `)
+        .then((results)=>{
+            neo4j.run(`
+                MATCH (n:USER {username: "${srcUsername}"}), (m:USER {username: "${username}"})
+                CREATE (n)-[r:CONTACT]->(m)
+            `).then((resultss)=>{
+                neo4j.run(`
+                MATCH (n:USER {username: "${srcUsername}"}), (m:USER {username: "${username}"})
+                CREATE (n)<-[r:CONTACT]-(m)
+                `)
+                .then(resultssss=>{
+                    res.status(200).end();
+                    return;
+                })
+                .catch(err=>{
+                    console.log(err);
+                    res.status(500).end();
+                    return;
+                });
+            })
+            .catch(err=>{
+                console.log(err);
+                res.status(500).end();
+                return;
+            });
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).end();
+            return;
+        });
+    })
+    .catch(()=>res.status(405).end());
+});
 async function authenticate(username, password){
     return new Promise(async (res, rej)=>{
     await neo4j.run(`MATCH (n:USER {username:"${username}"})
