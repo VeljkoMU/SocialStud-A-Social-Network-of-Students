@@ -123,6 +123,32 @@ profileRouter.put("/accept", async (req, res)=>{
     })
     .catch(()=>res.status(405).end());
 });
+
+profileRouter.get("/contacts", async (req, res)=>{
+    username = req.query.username;
+    password = md5Encrypt(req.query.password);
+
+    authenticate(username, password)
+    .then(()=>{
+        neo4j.run(`
+            MATCH (n:USER {username: "${username}"})-[r:CONTACT]->(m:USER)
+            RETURN m
+        `)
+        .then((results)=>{
+            let contacts = results.records[0]._fields;
+            res.json(contacts).end();
+            return;
+        })
+        .catch((err)=>{
+            console.log(err);
+            res.status(500).end();
+            return;
+        });
+    })
+    .catch(()=>{
+        res.status(405).end();
+    })
+});
 async function authenticate(username, password){
     return new Promise(async (res, rej)=>{
     await neo4j.run(`MATCH (n:USER {username:"${username}"})
