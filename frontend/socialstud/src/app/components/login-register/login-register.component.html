@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="form sp">
+        <div class="inout-div">
+            <label>Username: </label>
+            <input [(ngModel)]="username">
+        </div>
+        <div class="inout-div">
+            <label>Password: </label>
+            <input type="password" [(ngModel)]="password">
+        </div>
+
+        <button (click)="login()" class="submit-btn">LOGIN</button>
+    </div>
+
+    <div class="form">
+        <div class="inout-div">
+            <label>Username: </label>
+            <input [(ngModel)]="usernamereg">
+        </div>
+        <div class="inout-div">
+            <label>Password: </label>
+            <input type="password" [(ngModel)]="passwordreg">
+        </div>
+        <div class="inout-div">
+            <label>Name: </label>
+            <input [(ngModel)]="name">
+        </div>
+        <div class="inout-div">
+            <label>Surname: </label>
+            <input [(ngModel)]="surname">
+        </div>
+        <div class="inout-div">
+            <label>Location: </label>
+            <select [(ngModel)]="location">
+                <option value="bor">Bor</option>
+            </select>
+        </div>
+        <div class="inout-div">
+            <label>Faculty: </label>
+            <select [(ngModel)]="faculty">
+                <option value="elfak">Elektronski Fakultet u Nisu</option>
+            </select>
+        </div>
+        <div class="inout-div">
+            <label>Birthday: </label>
+            <input [(ngModel)]="bday">
+        </div>
+        <div class="inout-div">
+            <label>Year of studies: </label>
+            <input [(ngModel)]="year">
+        </div>
+        <div class="inout-div">
+            <label>Email: </label>
+            <input [(ngModel)]="email">
+        </div>
+
+        <button (click)="register()" class="submit-btn">REGISTER</button>
+    </div>
+</div>

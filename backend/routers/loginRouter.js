@@ -5,6 +5,7 @@ const neo4j = require('../neo4jsConnection');
 const loginRouter = express.Router();
 
 loginRouter.post("/register", async (req, res)=>{
+    console.log(req.body);
     let username = req.body.username;
     let password = md5Encrypt(req.body.password);
 
@@ -29,7 +30,8 @@ loginRouter.post("/register", async (req, res)=>{
                 location: "${req.body.location}",
                 faculty: "${req.body.faculty}",
                 birthdate: "${req.body.birthdate}",
-                year: "${req.body.year}"
+                year: "${req.body.year}",
+                email: "${req.body.email}"
             })
         `)
         .then((results)=>{
