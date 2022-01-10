@@ -1,0 +1,50 @@
+.container{
+    width: 100%;
+    height: 100%;
+    padding:30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: #c8e3d4;
+}
+
+.basic-info{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    border-bottom:10px;
+}
+
+.private-info{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.private-info div{
+    width: 42%;
+}
+
+.info{
+    padding:30px;
+}
+
+.interests{
+    display: flex;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #87aaaa;
+    padding: 20px;
+}
+
+p{
+    padding:20px 30px 20px 30px;
+    border: 1px solid black;
+    background-color: rgba(0,0,0,0.5);
+    color:white;
+    max-height: 20px;
+
+}

@@ -168,4 +168,94 @@ async function authenticate(username, password){
 });
 }
 
+//Vraca 5 random profila
+profileRouter.get('/recomended', async(req, res)=>{
+    let username = req.query.username;
+    let password = md5Encrypt(req.query.password);
+
+    authenticate(username, password)
+    .then(()=>{
+        neo4j.run(`    
+        CALL {MATCH (n:USER{username:"${username}"})-[:IS_IN]->(l:LOCATION)<-[:IS_IN]-(u:USER) return u union match(n:USER{username:"${username}"})-[:HAS_INTEREST]->(i:INTEREST)<-[:HAS_INTEREST]-(u:USER) return u union match (n:USER {username:"${username}"})-[:STUDIES_IN]->(f:FACULTY)<-[:STUDIES_IN]-(u:USER) return u} return u, rand() as r order by r limit 5
+        `)
+        .then((result)=>{
+            let recomended_profiles =[]
+            result.records.forEach(record=>recomended_profiles.push(record._fields[0].properties));
+            console.log(recomended_profiles);
+            res.json(recomended_profiles).end(); //JSON.stringify
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).end();
+        })
+    })
+
+})
+
+profileRouter.post('/addInterest', async(req,res)=>{
+    //logged user
+    let username = req.body.user;
+    // let username =  req.body.username;
+    // let password =  req.body.password;
+
+    let interest = req.body.interest;
+
+    const interest_query = await neo4j.run(`MATCH(n :INTEREST {name:'${interest}'}) return n`)
+    const interest_exist = interest_query.records.length;
+    console.log(interest_exist);
+
+    if(interest_exist){
+        //if user hasn't relationship
+        const user_relationsip = await neo4j.run(`MATCH(n:INTEREST {name:'${interest}'}) <- [r:HAS_INTEREST] - (x:USER {username:'${username}'}) return n`)
+        const user_relationship_exists = user_relationsip.records.length;
+
+        console.log("relationship:" + user_relationship_exists);
+        if(!user_relationship_exists){
+
+            await neo4j.run(`MATCH (a:USER),(b:INTEREST) WHERE a.username = '${username}' AND b.name = '${interest}' CREATE (a)-[r:HAS_INTEREST]->(b) RETURN type(r)`), async (err, result)=>{                
+            
+                console.log(`Username: ${username} has ${interest}`);
+                if(err){
+                    console.log(err);
+                    res.status(500).end();
+                    return;
+                }
+            }
+            console.log("end");
+        }
+        else{
+            console.log('The user: ' + username + ' already has interest:' + interest);
+            return;
+            
+        }
+    }
+    else{
+        //create node(interest) and connect it with a username
+       await neo4j.run(`CREATE (n:INTEREST {name:"${interest}"})`)
+       await neo4j.run(`MATCH (a:USER),(b:INTEREST) WHERE a.username = '${username}' AND b.name = '${interest}' CREATE (a)-[r:HAS_INTEREST]->(b) RETURN type(r)`)
+
+   }
+    
+
+});
+
+profileRouter.get('/interestList', async(req,res)=>{
+    let username = req.query.username;
+    console.log("Evo me!");
+        neo4j.run(`    
+            MATCH (n:USER{username:'${username}'})-[:HAS_INTEREST]->(i:INTEREST) return i
+        `)
+        .then((result)=>{
+            let profile_interests =[];
+            result.records.forEach(record=>profile_interests.push(record._fields[0].properties));
+            console.log(profile_interests);
+            res.json(profile_interests).end(); //JSON.stringify
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).end();
+        })
+});
+
+
 module.exports = profileRouter;

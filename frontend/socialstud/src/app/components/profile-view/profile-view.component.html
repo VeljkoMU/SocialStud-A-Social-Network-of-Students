@@ -1,0 +1,23 @@
+<div class='container'>
+    <div class='basic-info'>
+        <h1>{{user.name}}</h1>
+        <h1>{{user.surname}}</h1>
+    </div>
+
+    <div class='private-info'>
+    <div class='info'>
+        <h2>email: {{user.email}}</h2>
+        <h2>faculty: {{user.faculty}}</h2>
+        <h2>llocation: {{user.location}}</h2>
+        <h2>year: {{user.year}}</h2>
+        <h2>birthdate: {{user.birthdate}}</h2>
+    </div>
+    <div class='interests'>
+        <p *ngFor="let i of interests">{{i}}</p>
+    </div>
+</div>
+<div class="contacts">
+
+</div>
+
+</div>>

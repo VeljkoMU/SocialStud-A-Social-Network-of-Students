@@ -35,13 +35,41 @@ loginRouter.post("/register", async (req, res)=>{
             })
         `)
         .then((results)=>{
+            neo4j.run(`
+            MATCH
+                (a:USER),
+                (b:FACULTY)
+            WHERE a.username = '${username}' AND b.name = '${req.body.faculty}'
+            CREATE (a)-[r:STUDIES_IN]->(b)
+            RETURN type(r)
+        `)
+        .then((results)=>{
+            neo4j.run(`
+            MATCH
+                (a:USER),
+                (b:LOCATION)
+            WHERE a.username = '${username}' AND b.name = '${req.body.location}'
+            CREATE (a)-[r:IS_IN]->(b)
+            RETURN type(r)
+        `)
+        .then((results)=>{
             res.status(200).end();
         })
         .catch(err=>{
             console.log(err);
             res.status(500).end();
         });
-    })
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).end();
+        });
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).end();
+        });
+    });
 });
 
 loginRouter.get("/", async (req, res)=>{

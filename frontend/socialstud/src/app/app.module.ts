@@ -9,13 +9,19 @@ import { LoginRegisterComponent } from './components/login-register/login-regist
 import { MainComponent } from './components/main/main.component';
 import { RouterModule } from '@angular/router';
 import { InterestsComponent } from './components/interests/interests.component';
+import { ProfileViewComponent } from './components/profile-view/profile-view.component';
+import { ProfileThumbnailComponent } from './components/profile-thumbnail/profile-thumbnail.component';
+import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginRegisterComponent,
     MainComponent,
-    InterestsComponent
+    InterestsComponent,
+    ProfileViewComponent,
+    ProfileThumbnailComponent,
+    RecommendationsComponent
   ],
   imports: [
     BrowserModule,

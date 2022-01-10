@@ -1,1 +1,12 @@
-<p>main works!</p>
+
+<header>
+    <h1>SocialStud</h1>
+</header>
+<div class='container'>
+    <div class='part2'>
+    <app-profile-view></app-profile-view>
+    </div>
+    <div class='part3'>
+        <app-recommendations *ngIf="ready==true"></app-recommendations>
+    </div>
+</div>

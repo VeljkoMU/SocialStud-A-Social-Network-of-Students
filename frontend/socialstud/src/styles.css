@@ -4,4 +4,16 @@ html, body{
     padding: 0;
     height: 100%;
     width: 100%;
+    background-color: #f6eabe;
+    font-family: "prot";
+}
+
+@font-face {
+    font-family: "DD";
+    src: local("DD"), url(./assets/logofont.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: "prot";
+    src: local("prot"), url(./assets/prototype.ttf) format("truetype");
 }
