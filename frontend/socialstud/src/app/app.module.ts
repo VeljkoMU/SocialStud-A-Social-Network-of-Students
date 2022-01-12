@@ -12,6 +12,7 @@ import { InterestsComponent } from './components/interests/interests.component';
 import { ProfileViewComponent } from './components/profile-view/profile-view.component';
 import { ProfileThumbnailComponent } from './components/profile-thumbnail/profile-thumbnail.component';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
+import { SearchComponent } from './components/search/search.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RecommendationsComponent } from './components/recommendations/recommend
     InterestsComponent,
     ProfileViewComponent,
     ProfileThumbnailComponent,
-    RecommendationsComponent
+    RecommendationsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

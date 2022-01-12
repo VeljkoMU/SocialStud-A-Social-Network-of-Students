@@ -127,11 +127,12 @@ profileRouter.put("/accept", async (req, res)=>{
 profileRouter.get("/contacts", async (req, res)=>{
     username = req.query.username;
     password = md5Encrypt(req.query.password);
+    profile = req.query.prof;
 
     authenticate(username, password)
     .then(()=>{
         neo4j.run(`
-            MATCH (n:USER {username: "${username}"})-[r:CONTACT]->(m:USER)
+            MATCH (n:USER {username: "${profile}"})-[r:CONTACT]->(m:USER)
             RETURN m
         `)
         .then((results)=>{
@@ -256,6 +257,79 @@ profileRouter.get('/interestList', async(req,res)=>{
             res.status(500).end();
         })
 });
+
+profileRouter.get('/search/location', async(req,res)=>{
+    let username = req.query.username;
+    let password = md5Encrypt(req.query.password);
+	let location= req.query.location;
+
+    authenticate(username, password)
+    .then(()=>{
+        neo4j.run(`    
+            MATCH (l:LOCATION{name:'${location}'})<-[:IS_IN]-(u:USER) 
+			WHERE u.username<>{username:'${username}'} return u
+        `)
+        .then((result)=>{
+            let profile_locations =[]
+            result.records.forEach(record=>profile_locations.push(record._fields[0].properties));
+            console.log(profile_locations);
+            res.json(profile_locations).end(); //JSON.stringify
+        })
+        .catch(err=>{
+            console.log(err);
+
+            res.status(500).end();
+        })
+    })
+})
+profileRouter.get('/search/interest', async(req,res)=>{
+    let username = req.query.username;
+    let password = md5Encrypt(req.query.password);
+	let interest =req.query.interest;
+
+    authenticate(username, password)
+    .then(()=>{
+        neo4j.run(`    
+            MATCH (i:INTEREST{name:'${interest}'})<-[:HAS_INTEREST]-(u:USER)
+			WHERE u.username<>{username:'${username}'} return u
+        `)
+        .then((result)=>{
+            let profile_interests =[];
+            result.records.forEach(record=>profile_interests.push(record._fields[0].properties));
+            console.log(profile_interests);
+            res.json(profile_interests).end(); //JSON.stringify
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).end();
+        })
+    })
+})
+profileRouter.get('/search/faculty', async(req, res)=>{
+    let username = req.query.username;
+    let password = md5Encrypt(req.query.password);
+	let faculty=req.query.faculty;
+
+    authenticate(username, password)
+    .then(()=>{
+        neo4j.run(`    
+            MATCH (f:FACULTY{name:'${faculty}'})<-[:STUDIES_IN]-(u:USER) 
+			WHERE u.username<>{username:'${username}'} return u
+        `)
+        .then((result)=>{
+            let profile_faculties =[]
+            result.records.forEach(record=>profile_faculties.push(record._fields[0].properties));
+            console.log(profile_faculties);
+            res.json(profile_faculties).end(); //JSON.stringify
+        })
+        .catch(err=>{
+            console.log(err);
+            res.status(500).end();
+        })
+    })
+
+})
+
 
 
 module.exports = profileRouter;
