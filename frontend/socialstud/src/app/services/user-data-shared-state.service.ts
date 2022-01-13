@@ -11,7 +11,7 @@ export class UserDataSharedStateService {
 
   private username: string = "";
   private password: string ="";
-  private contactList: User[]=[];
+  public contactList: User[]=[];
   private dataChangeSubject: Subject<any>=new Subject<any>();
 
   constructor(private httpClient:HttpClient) { }
@@ -27,21 +27,24 @@ export class UserDataSharedStateService {
     this.password = password;
     setTimeout(()=>{
     this.getContacts(username).subscribe((data:any)=>{
+      console.log("kontakti: ");
+      console.log(data);
       data.forEach((user:any)=>{
         this.contactList.push({
-          username: user.username,
-          name: user.name,
-          surname: user.surname,
-          location: user.location,
-           faculty: user.faculty,
-          email: user.email,
-          year: user.year,
-           birthdate: user.birthdate
+          username: user._fields[0].properties.username,
+          name: user._fields[0].properties.name,
+          surname: user._fields[0].properties.surname,
+          location: user._fields[0].properties.location,
+           faculty: user._fields[0].properties.faculty,
+          email: user._fields[0].properties.email,
+          year: user._fields[0].properties.year,
+           birthdate: user._fields[0].properties.birthdate
         });
       });
     });
+    console.log("Contcts: ")
     console.log(this.contactList);
-    },800);
+    },500);
   }
 
   public getData(){

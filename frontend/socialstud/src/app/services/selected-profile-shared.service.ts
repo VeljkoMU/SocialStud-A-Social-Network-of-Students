@@ -24,6 +24,8 @@ export class SelectedProfileSharedService {
 
 public interests: string[] = [];
 
+public contacts: User[] =[];
+
 public selectedServiceChnage: EventEmitter<User> = new EventEmitter<User>();
 
 
@@ -38,6 +40,7 @@ public changeData(prof: User){
       console.log(data);
       let nizNaziva: any[] = [];
       data.forEach((interest: any)=>nizNaziva.push(interest.name));
+      this.getContacts();
       return nizNaziva;
     })
   ).subscribe((niz: any)=>{
@@ -59,8 +62,29 @@ public changeData(prof: User){
       year: prof.year,
       birthdate: prof.birthdate
     }
+    setTimeout(()=>{
     this.changeData(this.profile);
+    },200);
   });
   
+ }
+
+ public getContacts(){
+   console.log(this.profile.username);
+  this.profileSerrvice.getContacts(this.profile.username).subscribe((data:any)=>{
+    this.contacts=[];
+    data.forEach((user:any)=>{
+      this.contacts.push({
+        username: user._fields[0].properties.username,
+        name: user._fields[0].properties.name,
+        surname: user._fields[0].properties.surname,
+        location: user._fields[0].properties.location,
+         faculty: user._fields[0].properties.faculty,
+        email: user._fields[0].properties.email,
+        year: user._fields[0].properties.year,
+         birthdate: user._fields[0].properties.birthdate
+      });
+    });
+  });
  }
 }

@@ -36,7 +36,7 @@ profileRouter.post("/request", async (req, res)=>{
     let username = req.body.sourceUser.username;
     let password = md5Encrypt(req.body.sourceUser.password);
     let destUsername = req.body.destUser.username;
-
+    console.log(req.body);
     authenticate(username, password)
     .then(()=>{
         neo4j.run(`
@@ -45,6 +45,7 @@ profileRouter.post("/request", async (req, res)=>{
         `)
         .then(()=>{
             res.status(200).end();
+            console.log("Uspesno!");
         })
         .catch((err)=>{
             console.log(err);
@@ -59,7 +60,7 @@ profileRouter.post("/request", async (req, res)=>{
 profileRouter.get("/request", async (req, res)=>{
     let username = req.query.username;
     let password = md5Encrypt(req.query.password);
-
+    console.log("Getting requests!");
     authenticate(username, password)
     .then(()=>{
         neo4j.run(`
@@ -136,7 +137,8 @@ profileRouter.get("/contacts", async (req, res)=>{
             RETURN m
         `)
         .then((results)=>{
-            let contacts = results.records[0]._fields;
+            console.log(results);
+            let contacts = results.records;
             res.json(contacts).end();
             return;
         })

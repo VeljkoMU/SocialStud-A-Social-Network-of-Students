@@ -13,6 +13,9 @@ import { ProfileViewComponent } from './components/profile-view/profile-view.com
 import { ProfileThumbnailComponent } from './components/profile-thumbnail/profile-thumbnail.component';
 import { RecommendationsComponent } from './components/recommendations/recommendations.component';
 import { SearchComponent } from './components/search/search.component';
+import { RequestComponent } from './components/request/request.component';
+import { RequestListComponent } from './components/request-list/request-list.component';
+import { ContactListComponent } from './components/contact-list/contact-list.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { SearchComponent } from './components/search/search.component';
     ProfileViewComponent,
     ProfileThumbnailComponent,
     RecommendationsComponent,
-    SearchComponent
+    SearchComponent,
+    RequestComponent,
+    RequestListComponent,
+    ContactListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,10 +1,10 @@
-<div class='container'>
+<div class='container' >
     <div class='basic-info'>
         <h1>{{user.name}}</h1>
         <h1>{{user.surname}}</h1>
     </div>
 
-    <div class='private-info'>
+    <div class='private-info' *ngIf="isAllowed">
     <div class='info'>
         <h2>email: {{user.email}}</h2>
         <h2>faculty: {{user.faculty}}</h2>
@@ -12,12 +12,17 @@
         <h2>year: {{user.year}}</h2>
         <h2>birthdate: {{user.birthdate}}</h2>
     </div>
-    <div class='interests'>
+    <div class='interests' *ngIf="isAllowed">
         <p *ngFor="let i of interests">{{i}}</p>
     </div>
 </div>
-<div class="contacts">
+<div class="contacts" *ngIf="isAllowed">
+    <app-contact-list></app-contact-list>
+</div>
 
+<div *ngIf="!isAllowed">
+    <h1>You cannot see this user's data until you become contacts</h1>
+    <button (click)="sendRequest()">Send Contact Request</button>
 </div>
 
 </div>>

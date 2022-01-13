@@ -13,6 +13,7 @@ export class RecommendationsComponent implements OnInit {
   constructor(private pS: ProfileService) { }
 
   ngOnInit(): void {
+    setTimeout(()=>{
     this.pS.recommnedations().subscribe((data: any)=>{
         data.forEach((profil: any)=>{
           this.profiles.push({
@@ -27,6 +28,7 @@ export class RecommendationsComponent implements OnInit {
           });
         });
     });
+  },1000);
   }
 
 }
