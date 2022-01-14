@@ -15,7 +15,7 @@ export class ContactListComponent implements OnInit {
   ];
 
   constructor(private selectedService: SelectedProfileSharedService) { 
-
+    this.contacts= this.selectedService.contacts;
 
   }
 

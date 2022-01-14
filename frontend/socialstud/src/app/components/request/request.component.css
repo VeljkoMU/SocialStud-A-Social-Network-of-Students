@@ -1,0 +1,17 @@
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding:5px;
+    background-color: #5C5F58;
+    color: #DCE1E3;
+}
+
+.container h3{
+    min-width: 15px;
+}
+
+.container button{
+    width: 100%;
+}

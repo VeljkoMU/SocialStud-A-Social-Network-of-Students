@@ -1,7 +1,7 @@
 .container{
     width: 100%;
     height: 100%;
-    background-color: #659dbd;
+    background-color: #004E7C;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,7 +9,7 @@
 
 .form{
     padding:50px;
-    background-color: #daad86;
+    background-color: #DCE1E3;
     min-height: 300px;
     display: flex;
     flex-direction: column;

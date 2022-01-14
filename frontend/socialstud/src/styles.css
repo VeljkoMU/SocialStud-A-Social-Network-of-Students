@@ -4,8 +4,20 @@ html, body{
     padding: 0;
     height: 100%;
     width: 100%;
-    background-color: #f6eabe;
+    background-color: #DCE1E3;
     font-family: "prot";
+}
+
+button{
+    padding: 15px 20px 15px 20px;
+    background-color:  #004E7C;
+    color:#DCE1E3;
+    transition: ease-in-out 0.5s;
+}
+button:hover{
+    padding: 22px 18px 22px 180px;
+    background-color: #6F0A16;
+    color:black;
 }
 
 @font-face {
