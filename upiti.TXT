@@ -1,0 +1,10 @@
+create (n:LOCATION {name: 'nis'});
+create (n:LOCATION {name: 'beograd'});
+create (n:LOCATION {name: 'novi sad'});
+create (n:FACULTY {name: 'elektronski fakultet'});
+create (n:FACULTY {name: 'medicinski fakultet'});
+create (n:FACULTY {name: 'Filozofski fakultet'});
+create (n:FACULTY {name: 'Pravni fakultet'});
+create (n:FACULTY {name: 'pmf'});
+create (n:FACULTY {name: 'ekonomski fakultet'});
+create (n:FACULTY {name: 'fakultet fizicke hemije'});
