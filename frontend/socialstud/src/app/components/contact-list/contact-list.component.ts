@@ -24,7 +24,6 @@ export class ContactListComponent implements OnInit {
       setTimeout(()=>{
       this.contacts= this.selectedService.contacts;
       }, 300);
-      console.log("KKK:");
       console.log(this.selectedService.contacts);
     });
 }

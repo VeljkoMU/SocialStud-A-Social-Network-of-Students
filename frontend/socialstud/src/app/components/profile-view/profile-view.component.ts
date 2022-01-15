@@ -66,7 +66,6 @@ export class ProfileViewComponent implements OnInit {
   }
 
   public sendRequest(){
-    alert("Evo me!");
     this.conactsService.sendRequest(this.user.username).subscribe(()=>{
       alert("Request sent!");
     });

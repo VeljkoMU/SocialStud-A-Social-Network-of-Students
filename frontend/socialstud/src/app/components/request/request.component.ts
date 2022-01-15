@@ -29,7 +29,6 @@ export class RequestComponent implements OnInit {
   }
 
   public accept(){
-    alert("Radim!");
     this.contactsService.accept(this.profile.username).subscribe(()=>{
       this.active = false;
   })
